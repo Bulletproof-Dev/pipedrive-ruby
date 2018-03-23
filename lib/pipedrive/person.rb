@@ -18,5 +18,14 @@ module Pipedrive
       res.success? ? res['data'] : bad_response(res,opts)
     end
 
+    def add_follower(opts = {})
+      res = post "#{resource_path}/#{id}/followers", :body => opts
+      res.success? ? true : bad_response(res,opts)
+    end
+
+    def followers
+      User.all(get "#{resource_path}/#{id}/followers")
+    end
+
   end
 end
