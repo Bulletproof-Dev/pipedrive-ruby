@@ -18,6 +18,15 @@ module Pipedrive
     def participants
       Person.all(get "#{resource_path}/#{id}/participants")
     end
+
+    def add_follower(opts = {})
+      res = post "#{resource_path}/#{id}/followers", :body => opts
+      res.success? ? true : bad_response(res,opts)
+    end
+
+    def followers
+      User.all(get "#{resource_path}/#{id}/followers")
+    end
     
     def remove_product product_attachment_id
       res = delete "#{resource_path}/#{id}/products", { :body => { :product_attachment_id => product_attachment_id } }
