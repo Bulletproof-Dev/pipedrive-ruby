@@ -49,5 +49,10 @@ module Pipedrive
       Note.all( get("/notes", :query => opts.merge(:deal_id => id) ) )
     end
     
+    def delete
+      res = delete "#{resource_path}/#{id}"
+      res.success? ? nil : bad_response(res,product_attachment_id)      
+    end
+    
   end
 end
