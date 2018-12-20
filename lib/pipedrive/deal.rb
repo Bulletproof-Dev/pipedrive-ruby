@@ -51,7 +51,7 @@ module Pipedrive
     
     def delete
       res = delete "#{resource_path}/#{id}"
-      res.success? ? nil : bad_response(res,product_attachment_id)      
+      res.success? ? nil : bad_response(res, id)      
     end
     
   end
