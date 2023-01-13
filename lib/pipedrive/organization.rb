@@ -23,6 +23,19 @@ module Pipedrive
         find_by_name(name).first || create(opts.merge(:name => name))
       end
 
+      def search(opts)
+        res = get "#{resource_path}/search", query: opts
+        res.success? ? res['data'] : bad_response(res,opts)
+      end
+
+      def find_by_name(name, opts={})
+        res = search({ term: name, fields: "name", exact_match: true }.merge(opts))
+
+        return unless org_id = res.fetch("items", nil)&.first&.fetch("item", nil)&.fetch("id", nil)
+
+        find(org_id)
+      end
+
     end
   end
 end
