@@ -15,7 +15,7 @@ module Pipedrive
   class Base < OpenStruct
 
     include HTTParty
-    
+
     base_uri 'https://api.pipedrive.com/v1'
     headers HEADERS
     format :json
@@ -47,7 +47,7 @@ module Pipedrive
 
       super(struct_attrs)
     end
-    
+
     # Create related objects from hash
     #
     # Only used internally
@@ -65,7 +65,7 @@ module Pipedrive
           related_objects[key] = related_object
         end
       end
-      
+
       related_objects
     end
 
@@ -82,7 +82,7 @@ module Pipedrive
         false
       end
     end
-    
+
     # Destroys the object
     #
     # @return [HTTParty::Response] response
@@ -126,7 +126,7 @@ module Pipedrive
           end
           data
         else
-          bad_response(res,attrs)
+          bad_response(res,options)
         end
       end
 
@@ -139,12 +139,12 @@ module Pipedrive
           bad_response(res,opts)
         end
       end
-      
+
       def search opts
         res = get resource_path, query: opts
         res.ok? ? new_list(res) : bad_response(res, opts)
       end
-      
+
       def find(id)
         res = get "#{resource_path}/#{id}"
         res.ok? ? new(res) : bad_response(res,id)
@@ -159,7 +159,7 @@ module Pipedrive
          res = delete "#{resource_path}/#{id}"
          res.ok? ? res : bad_response(res, id)
       end
-      
+
       def resource_path
         # The resource path should match the camelCased class name with the
         # first letter downcased.  Pipedrive API is sensitive to capitalisation
