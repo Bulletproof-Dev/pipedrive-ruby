@@ -101,6 +101,14 @@ module Pipedrive
         default_params :api_token => token
       end
 
+      # A passthrough to allow for the authentication with and access to multiple accounts
+      #
+      # eg. Pipedrive::Deal.auth(API-KEY).find(DEAL-ID)
+      def auth(token)
+        authenticate(token)
+        self
+      end
+
       # Examines a bad response and raises an appropriate exception
       #
       # @param [HTTParty::Response] response
